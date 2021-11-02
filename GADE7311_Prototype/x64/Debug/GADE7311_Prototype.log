@@ -1,1 +1,18 @@
-﻿  GADE7311_Prototype.vcxproj -> D:\work\coding\2021\!OpenGL\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe
+﻿  EnginePrototype.cpp
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(91,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(97,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Model_Loader.h(98,22): warning C4101: 'numIndices': unreferenced local variable
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(51,38): warning C4305: 'initializing': truncation from 'int' to 'char'
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(51,26): warning C4309: 'initializing': truncation of constant value
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(278,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(279,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(296,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(352,24): warning C4553: '==': result of expression not used; did you intend '='?
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(367,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(368,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(372,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(373,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(374,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(375,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(516): warning C4715: 'ExecuteCommand': not all control paths return a value
+  GADE7311_Prototype.vcxproj -> D:\work\coding\2021\!OpenGL\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe

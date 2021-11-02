@@ -147,6 +147,8 @@
   <ItemGroup>
     <ClInclude Include="EnginePrototype.h" />
     <ClInclude Include="Engine_Shaders.h" />
+    <ClInclude Include="Mesh_Loader.h" />
+    <ClInclude Include="Model_Loader.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>

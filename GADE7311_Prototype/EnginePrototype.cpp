@@ -17,6 +17,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Engine_Shaders.h"
+#include "Model_Loader.h"
 #include "stb_image.h"
 #include <string>
 #include <vector>
@@ -85,11 +86,16 @@ int main()
     }
 
     //gltools
+    stbi_set_flip_vertically_on_load(true);
     glEnable(GL_DEPTH_TEST);
     glfwSetInputMode(engineView, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     //shaders
     EngineShader newShaders("ShaderVertex.txt", "ShaderFragment.txt");
+
+    //Models
+    //Model models("backpack.obj");
+    Model models("Survival_BackPack_2.fbx");
 
     //vertices
     float room1[] = {
@@ -261,7 +267,7 @@ int main()
         glClearColor(0.1f, 0.4f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         //texture
-        glBindTexture(GL_TEXTURE_2D, texture[0]);
+        //glBindTexture(GL_TEXTURE_2D, texture[0]);
         //draw
         newShaders.use();
 
@@ -274,6 +280,12 @@ int main()
         camera = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glm::mat4 perspective;
         perspective = glm::perspective(glm::radians(fov), 900.0f / 900.0f, 0.1f, 100.0f);
+
+        //model render
+        object = glm::translate(object, glm::vec3(0.0f, 0.0f, 0.0f)); 
+        object = glm::scale(object, glm::vec3(1.0f, 1.0f, 1.0f));
+        newShaders.setMat4("object", object);
+        models.Draw(newShaders);
 
         unsigned int objCoord = glGetUniformLocation(newShaders.ShaderID, "object");
         glUniformMatrix4fv(objCoord, 1, GL_FALSE, glm::value_ptr(object));
@@ -288,7 +300,7 @@ int main()
         glBindVertexArray(VAO[0]);
         //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         //glDrawArrays(GL_TRIANGLES, 0, 48);
-        for (unsigned int i = 0; i < 5; i++)
+        /*for (unsigned int i = 0; i < 5; i++)
         {
             object = glm::translate(object, cubePositions[i]);
             //float angle = 20.0f * i;
@@ -308,7 +320,7 @@ int main()
             newShaders.setMat4("object", door);
 
             glDrawArrays(GL_TRIANGLES, 0, 6);
-        }
+        }*/
         //buffers
         glfwSwapBuffers(engineView);
         glfwPollEvents();
@@ -335,6 +347,10 @@ void processInput(GLFWwindow* window)
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS && !consoleEnabled)
+    {
+        consoleEnabled == true;
+    }
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
