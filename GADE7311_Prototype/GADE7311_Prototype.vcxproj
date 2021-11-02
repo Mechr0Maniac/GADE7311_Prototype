@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\library\desktop\compiler files\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\library\desktop\compiler files\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Vega\Semester 2\GADE\compiler files\include;D:\library\desktop\compiler files\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Vega\Semester 2\GADE\compiler files\libs;D:\library\desktop\compiler files\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
