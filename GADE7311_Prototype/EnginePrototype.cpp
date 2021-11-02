@@ -21,6 +21,7 @@
 #include "stb_image.h"
 #include <string>
 #include <vector>
+#include <time.h>
 
 #include <iostream>
 
@@ -33,9 +34,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void character_callback(GLFWwindow* window, unsigned int codepoint);
-string ExecuteCommand();
+string ConsoleCommands();
 vector<string> split(string x, char delim = ' ');
-void UpdateTextDisplay();
 
 const unsigned int WIDTH = 900;
 const unsigned int HEIGHT = 900;
@@ -48,9 +48,13 @@ float lastX = WIDTH/2, lastY = HEIGHT/2;
 bool firstMouse = true;
 bool consoleEnabled = false;
 bool consoleTyping = false;
-const char Console_key = GLFW_KEY_TAB;
+const char Console_key = GLFW_KEY_SPACE;
 string command_line;
 string previousCommands;
+int startTime = time(NULL);
+int endTime;
+int fps = 0;
+int fpsCount = 0;
 
 double lastTime = glfwGetTime();
 int nbFrames = 0;
@@ -247,15 +251,7 @@ int main()
     glfwSetKeyCallback(engineView, key_callback);
     glfwSetCharCallback(engineView, character_callback);
 
-    // Measure speed
-    double currentTime = glfwGetTime();
-    nbFrames++;
-    if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
-        // printf and reset timer
-        
-        nbFrames = 0;
-        lastTime += 1.0;
-    }
+    
 
     //rendering
     while (!glfwWindowShouldClose(engineView))
@@ -324,6 +320,29 @@ int main()
         //buffers
         glfwSwapBuffers(engineView);
         glfwPollEvents();
+
+        //FPS Count
+        fps++;
+        endTime = time(NULL);
+
+        if (endTime - startTime > 0)
+        {
+            fpsCount = fps;
+
+            fps = 0;
+            startTime = endTime;
+        }
+
+        // Measure speed for FPS
+        /*double currentTime = glfwGetTime();
+        nbFrames++;
+        if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
+            // printf and reset timer
+            fps = nbFrames;
+
+            nbFrames = 0;
+            lastTime += 1.0;
+        }*/
     }
 
     glfwTerminate();
@@ -404,10 +423,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if (action == GLFW_PRESS || action == GLFW_RELEASE)
-    {
-        UpdateTextDisplay();
-    }
     if (key == Console_key)
     {
         if (action == GLFW_PRESS)
@@ -415,6 +430,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             if (!consoleEnabled)
             {
                 consoleEnabled = true;
+                printf("\nConsole Enabled");
             }
             else
             {
@@ -424,6 +440,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 }
 
                 consoleEnabled = false;
+                printf("Console Disabled");
             }
         }
     }
@@ -435,11 +452,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             {
                 consoleEnabled = false;
                 consoleTyping = false;
-                previousCommands += command_line;
 
                 if (command_line.size() > 0)
                 {
-                    previousCommands += "\n-> " + ExecuteCommand() + "\n\n";
+                    string executeCommand = ConsoleCommands();
+                    printf(executeCommand.c_str());
                 }
                 return;
             }
@@ -450,6 +467,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 {
                     printf("\33[2K\r");
                     command_line.resize(command_line.size() - 1);
+                    printf(command_line.c_str());
                 }
                 return;
             }
@@ -464,19 +482,18 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
         if (consoleEnabled)
         {
             consoleTyping = true;
-        }
 
-        char c = static_cast<char>(codepoint);
-        command_line += c;
+            char c = static_cast<char>(codepoint);
+            command_line += c;
+            printf("\33[2K\r");
+            printf(command_line.c_str());
+        }
+                
     }
 }
 
-void UpdateTextDisplay()
-{
 
-}
-
-string ExecuteCommand()
+string ConsoleCommands()
 {
     try //error handling...yay
     {
@@ -484,29 +501,36 @@ string ExecuteCommand()
 
         if (command[0] == "fps")
         {
-            printf("%f ms/frame\n", 1000.0 / double(nbFrames));
+            printf("\n%f fps", 1/deltaTime);
 
-            return "Executed: " + command[0];
+            return "\nExecuted: " + command[0] ;
         }
 
         if (command[0] == "object_load")
         {
-            return "Executed: " + command[0];
+            return "\nExecuted: " + command[0];
         }
 
         if (command[0] == "level_load")
         {
-            return "Executed: " + command[0];
+            return "\nExecuted: " + command[0];
         }
 
         if (command[0] == "triangle_count")
         {
-            return "Executed: " + command[0];
+            return "\nExecuted: " + command[0];
         }
 
         if (command[0] == "help")
         {
-            return "Executed: " + command[0];
+
+            printf("\nCommands:");
+            printf("\nfps - frames per second counter");
+            printf("\nobject_load - load an object from a file");
+            printf("\nlevel_load - load a level from a file");
+
+            return "\nExecuted: " + command[0];
+
         }
     }
     catch (const std::exception&)
