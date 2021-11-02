@@ -18,13 +18,23 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Engine_Shaders.h"
 #include "stb_image.h"
+#include <string>
+#include <vector>
 
 #include <iostream>
+
+using std::string;
+using std::vector;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void character_callback(GLFWwindow* window, unsigned int codepoint);
+string ExecuteCommand();
+vector<string> split(string x, char delim = ' ');
+void UpdateTextDisplay();
 
 const unsigned int WIDTH = 900;
 const unsigned int HEIGHT = 900;
@@ -35,6 +45,14 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 float lastX = WIDTH/2, lastY = HEIGHT/2;
 bool firstMouse = true;
+bool consoleEnabled = false;
+bool consoleTyping = false;
+const char Console_key = GLFW_KEY_TAB;
+string command_line;
+string previousCommands;
+
+double lastTime = glfwGetTime();
+int nbFrames = 0;
 
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -219,6 +237,20 @@ int main()
     //wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+    // setting key callback method
+    glfwSetKeyCallback(engineView, key_callback);
+    glfwSetCharCallback(engineView, character_callback);
+
+    // Measure speed
+    double currentTime = glfwGetTime();
+    nbFrames++;
+    if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
+        // printf and reset timer
+        
+        nbFrames = 0;
+        lastTime += 1.0;
+    }
+
     //rendering
     while (!glfwWindowShouldClose(engineView))
     {
@@ -288,6 +320,10 @@ int main()
 
 void processInput(GLFWwindow* window)
 {
+    // setting key callback method
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetCharCallback(window, character_callback);
+
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     const float cameraSpeed = 4.0f * deltaTime;
@@ -303,6 +339,8 @@ void processInput(GLFWwindow* window)
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
+
+
     glViewport(0, 0, width, height);
 }
 
@@ -346,4 +384,135 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         fov = 1.0f;
     if (fov > 70.0f)
         fov = 70.0f;
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (action == GLFW_PRESS || action == GLFW_RELEASE)
+    {
+        UpdateTextDisplay();
+    }
+    if (key == Console_key)
+    {
+        if (action == GLFW_PRESS)
+        {
+            if (!consoleEnabled)
+            {
+                consoleEnabled = true;
+            }
+            else
+            {
+                if (command_line.size() > 0)
+                {
+                    printf("\33[2K\r");
+                }
+
+                consoleEnabled = false;
+            }
+        }
+    }
+    else if (consoleEnabled)
+    {
+        if (action == GLFW_PRESS)
+        {
+            if (key == GLFW_KEY_ENTER)
+            {
+                consoleEnabled = false;
+                consoleTyping = false;
+                previousCommands += command_line;
+
+                if (command_line.size() > 0)
+                {
+                    previousCommands += "\n-> " + ExecuteCommand() + "\n\n";
+                }
+                return;
+            }
+
+            if (key == GLFW_KEY_BACKSPACE)
+            {
+                if (command_line.size() > 0)
+                {
+                    printf("\33[2K\r");
+                    command_line.resize(command_line.size() - 1);
+                }
+                return;
+            }
+        }
+    }
+}
+
+void character_callback(GLFWwindow* window, unsigned int codepoint)
+{
+    if (codepoint != Console_key)
+    {
+        if (consoleEnabled)
+        {
+            consoleTyping = true;
+        }
+
+        char c = static_cast<char>(codepoint);
+        command_line += c;
+    }
+}
+
+void UpdateTextDisplay()
+{
+
+}
+
+string ExecuteCommand()
+{
+    try //error handling...yay
+    {
+        vector<string> command = split(command_line);
+
+        if (command[0] == "fps")
+        {
+            printf("%f ms/frame\n", 1000.0 / double(nbFrames));
+
+            return "Executed: " + command[0];
+        }
+
+        if (command[0] == "object_load")
+        {
+            return "Executed: " + command[0];
+        }
+
+        if (command[0] == "level_load")
+        {
+            return "Executed: " + command[0];
+        }
+
+        if (command[0] == "triangle_count")
+        {
+            return "Executed: " + command[0];
+        }
+
+        if (command[0] == "help")
+        {
+            return "Executed: " + command[0];
+        }
+    }
+    catch (const std::exception&)
+    {
+        return "Error";
+    }
+}
+
+vector<string> split(string x, char delim)
+{
+    x += delim; //includes a delimiter at the end so last word is also read
+    vector<string> splitted;
+    string temp = "";
+    for (int i = 0; i < x.length(); i++)
+    {
+        if (x[i] == delim)
+        {
+            splitted.push_back(temp); //store words in "splitted" vector
+            temp = "";
+            i++;
+        }
+        temp += x[i];
+    }
+    return splitted;
 }
