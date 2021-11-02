@@ -94,8 +94,8 @@ int main()
     EngineShader newShaders("ShaderVertex.txt", "ShaderFragment.txt");
 
     //Models
-    //Model models("backpack.obj");
-    Model models("Survival_BackPack_2.fbx");
+    Model models("backpack.obj");
+    //Model models("Survival_BackPack_2.fbx");
 
     //vertices
     float room1[] = {
