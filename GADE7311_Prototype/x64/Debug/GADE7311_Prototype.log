@@ -1,14 +1,1 @@
-﻿  EnginePrototype.cpp
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(50,38): warning C4305: 'initializing': truncation from 'int' to 'char'
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(50,26): warning C4309: 'initializing': truncation of constant value
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(272,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(273,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(284,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(351,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(352,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(356,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(357,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(358,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(359,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Vega\GADS\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(500): warning C4715: 'ExecuteCommand': not all control paths return a value
-  GADE7311_Prototype.vcxproj -> D:\Vega\GADS\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe
+﻿  GADE7311_Prototype.vcxproj -> D:\work\coding\2021\!OpenGL\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe
