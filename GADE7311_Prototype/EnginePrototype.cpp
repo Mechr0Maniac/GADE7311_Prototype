@@ -51,10 +51,14 @@ bool consoleTyping = false;
 const char Console_key = GLFW_KEY_SPACE;
 string command_line;
 string previousCommands;
+//string path = "level.fbx";
 int startTime = time(NULL);
 int endTime;
 int fps = 0;
 int fpsCount = 0;
+//Model models(path);
+
+GLFWwindow* engineView;
 
 double lastTime = glfwGetTime();
 int nbFrames = 0;
@@ -71,7 +75,8 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* engineView = glfwCreateWindow(WIDTH, HEIGHT, "Sean Martin 19011648 & Tayla Roach 18022560 Game Engine", NULL, NULL);
+    engineView = glfwCreateWindow(WIDTH, HEIGHT, "Sean Martin 19011648 & Tayla Roach 18022560 Game Engine", NULL, NULL);
+    
     if (engineView == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -98,8 +103,11 @@ int main()
     EngineShader newShaders("ShaderVertex.txt", "ShaderFragment.txt");
 
     //Models
-    Model models("backpack.obj");
+    //Model models(path);
+    //Model models("backpack.obj");
     //Model models("Survival_BackPack_2.fbx");
+    Model models("level.fbx");
+    //Model models("leve.obj");
 
     //vertices
     float room1[] = {
@@ -188,7 +196,7 @@ int main()
     };
 
 
-    //textures
+    /*//textures
     int texWdh, texHgt, texChan;
     unsigned char* texture1 = stbi_load("tex_wood_planks.jpg", &texWdh, &texHgt, &texChan, 0);
     unsigned char* texture2 = stbi_load("tex_brick_blocks.jpg", &texWdh, &texHgt, &texChan, 0);
@@ -242,7 +250,7 @@ int main()
     glBindTexture(GL_TEXTURE_2D, texture[1]);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWdh, texHgt, 0, GL_RGB, GL_UNSIGNED_BYTE, texture2);
     glGenerateMipmap(GL_TEXTURE_2D);
-    stbi_image_free(texture2);
+    stbi_image_free(texture2);*/
 
     //wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -293,7 +301,7 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         
-        glBindVertexArray(VAO[0]);
+        //glBindVertexArray(VAO[0]);
         //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         //glDrawArrays(GL_TRIANGLES, 0, 48);
         /*for (unsigned int i = 0; i < 5; i++)
@@ -349,33 +357,31 @@ int main()
     return 0;
 }
 
+
 void processInput(GLFWwindow* window)
 {
     // setting key callback method
     glfwSetKeyCallback(window, key_callback);
     glfwSetCharCallback(window, character_callback);
-
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    const float cameraSpeed = 4.0f * deltaTime;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS && !consoleEnabled)
+
+    if (!consoleEnabled) 
     {
-        consoleEnabled == true;
+        const float cameraSpeed = 4.0f * deltaTime;
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            cameraPos += cameraSpeed * cameraFront;
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            cameraPos -= cameraSpeed * cameraFront;
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     }
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-
-
     glViewport(0, 0, width, height);
 }
 
@@ -387,29 +393,30 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
         lastY = ypos;
         firstMouse = false;
     }
+    if (!consoleEnabled) {
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos;
+        lastX = xpos;
+        lastY = ypos;
 
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos;
-    lastX = xpos;
-    lastY = ypos;
+        const float sensitivity = 0.1f;
+        xoffset *= sensitivity;
+        yoffset *= sensitivity;
 
-    const float sensitivity = 0.1f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
+        yaw += xoffset;
+        pitch += yoffset;
 
-    yaw += xoffset;
-    pitch += yoffset;
+        if (pitch > 89.0f)
+            pitch = 89.0f;
+        if (pitch < -89.0f)
+            pitch = -89.0f;
 
-    if (pitch > 89.0f)
-        pitch = 89.0f;
-    if (pitch < -89.0f)
-        pitch = -89.0f;
-
-    glm::vec3 direction;
-    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    direction.y = sin(glm::radians(pitch));
-    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = glm::normalize(direction);
+        glm::vec3 direction;
+        direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+        direction.y = sin(glm::radians(pitch));
+        direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        cameraFront = glm::normalize(direction);
+    }
 };
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
@@ -430,7 +437,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             if (!consoleEnabled)
             {
                 consoleEnabled = true;
-                printf("\nConsole Enabled");
+                glfwSetInputMode(engineView, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                printf("\nConsole Enabled\n");
             }
             else
             {
@@ -440,6 +448,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
                 }
 
                 consoleEnabled = false;
+                glfwSetInputMode(engineView, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
                 printf("Console Disabled");
             }
         }
@@ -501,27 +510,27 @@ string ConsoleCommands()
 
         if (command[0] == "fps")
         {
-            printf("\n%f fps", 1/deltaTime);
+            printf("\n%f fps", 1 / deltaTime);
 
-            return "\nExecuted: " + command[0] ;
+            return "\nExecuted: " + command[0];
         }
 
-        if (command[0] == "object_load")
+        else if (command[0] == "object_load")
         {
             return "\nExecuted: " + command[0];
         }
 
-        if (command[0] == "level_load")
+        else if (command[0] == "level_load")
         {
             return "\nExecuted: " + command[0];
         }
 
-        if (command[0] == "triangle_count")
+        else if (command[0] == "triangle_count")
         {
             return "\nExecuted: " + command[0];
         }
 
-        if (command[0] == "help")
+        else if (command[0] == "help")
         {
 
             printf("\nCommands:");
@@ -530,12 +539,13 @@ string ConsoleCommands()
             printf("\nlevel_load - load a level from a file");
 
             return "\nExecuted: " + command[0];
-
         }
+        else
+            throw "error";
     }
-    catch (const std::exception&)
+    catch (...)/*(const std::exception&)*/
     {
-        return "Error";
+        return "\nError";
     }
 }
 
