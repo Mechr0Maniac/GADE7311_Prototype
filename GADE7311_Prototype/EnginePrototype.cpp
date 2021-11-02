@@ -217,7 +217,7 @@ int main()
     stbi_image_free(texture2);
 
     //wireframe
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     //rendering
     while (!glfwWindowShouldClose(engineView))
