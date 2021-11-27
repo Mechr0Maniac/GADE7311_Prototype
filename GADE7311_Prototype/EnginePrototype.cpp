@@ -24,6 +24,7 @@
 #include <time.h>
 
 #include <iostream>
+#include <Camera.h>
 
 using std::string;
 using std::vector;
@@ -34,18 +35,24 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void character_callback(GLFWwindow* window, unsigned int codepoint);
+unsigned int loadCubemap(vector<std::string> faces);
+
 string ConsoleCommands();
 vector<string> split(string x, char delim = ' ');
 
 const unsigned int WIDTH = 900;
 const unsigned int HEIGHT = 900;
+
+//Camera settings
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float yaw = -90.0f;
 float pitch = 0.0f;
 float fov = 70.0f;
-float deltaTime = 0.0f;	
-float lastFrame = 0.0f;
 float lastX = WIDTH/2, lastY = HEIGHT/2;
 bool firstMouse = true;
+
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 bool consoleEnabled = false;
 bool consoleTyping = false;
 const char Console_key = GLFW_KEY_SPACE;
@@ -101,6 +108,7 @@ int main()
 
     //shaders
     EngineShader newShaders("ShaderVertex.txt", "ShaderFragment.txt");
+    EngineShader skyboxShader("SkyBoxVertexShader.vs", "SkyBoxFragmentShader.fs");
 
     //Models
     //Model models(path);
@@ -195,6 +203,49 @@ int main()
     //glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 
+    float skyboxVertices[] = {
+        -1.0f,  1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+     1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+
+    -1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+
+     1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+
+    -1.0f, -1.0f,  1.0f,
+    -1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+
+    -1.0f,  1.0f, -1.0f,
+     1.0f,  1.0f, -1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+    -1.0f,  1.0f,  1.0f,
+    -1.0f,  1.0f, -1.0f,
+
+    -1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f,  1.0f,
+     1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f,  1.0f,
+     1.0f, -1.0f,  1.0f
+    };
 
     /*//textures
     int texWdh, texHgt, texChan;
@@ -252,6 +303,29 @@ int main()
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(texture2);*/
 
+    unsigned int skyboxVAO, skyboxVBO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glGenBuffers(1, &skyboxVBO);
+    glBindVertexArray(skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+    vector<std::string> faces;
+    {
+        "right.jpg",
+            "left.jpg",
+            "top.jpg",
+            "bottom.jpg",
+            "front.jpg",
+            "back.jpg";
+    };
+    unsigned int cubemapTexture = loadCubemap(faces);
+
+    skyboxShader.use();
+    skyboxShader.setInt("skybox", 0);
+    
     //wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -272,18 +346,34 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         //texture
         //glBindTexture(GL_TEXTURE_2D, texture[0]);
+        
+        
         //draw
         newShaders.use();
-
         glm::mat4 object = glm::mat4(1.0f);
         glm::mat4 door = glm::mat4(1.0f);
-        glm::mat4 camera(1.0f);
+        glm::mat4 cameraValue(1.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        glm::mat4 projection = glm::perspective(glm::radians(fov), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
         const float radius = 10.0f;
         float camX = sin(glfwGetTime()) * radius;
         float camZ = cos(glfwGetTime()) * radius;
-        camera = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        cameraValue = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glm::mat4 perspective;
         perspective = glm::perspective(glm::radians(fov), 900.0f / 900.0f, 0.1f, 100.0f);
+
+        glDepthFunc(GL_LEQUAL);
+        skyboxShader.use();
+        view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
+        skyboxShader.setMat4("view", view);
+        skyboxShader.setMat4("projection", projection);
+
+        glBindVertexArray(skyboxVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthFunc(GL_LESS);
 
         //model render
         object = glm::translate(object, glm::vec3(0.0f, 0.0f, 0.0f)); 
@@ -294,12 +384,14 @@ int main()
         unsigned int objCoord = glGetUniformLocation(newShaders.ShaderID, "object");
         glUniformMatrix4fv(objCoord, 1, GL_FALSE, glm::value_ptr(object));
         unsigned int cmrCoord = glGetUniformLocation(newShaders.ShaderID, "camera");
-        glUniformMatrix4fv(cmrCoord, 1, GL_FALSE, &camera[0][0]);
+        glUniformMatrix4fv(cmrCoord, 1, GL_FALSE, &cameraValue[0][0]);
         newShaders.setMat4("perspective", perspective);
 
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        
         
         //glBindVertexArray(VAO[0]);
         //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -357,26 +449,57 @@ int main()
     return 0;
 }
 
+unsigned int loadCubemap(vector<std::string> faces)
+{
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap tex failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free(data);
+        }
+    }
+
+    glTexParameteri(GL_PROXY_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_PROXY_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_PROXY_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_PROXY_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_PROXY_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return textureID;
+}
+
 
 void processInput(GLFWwindow* window)
 {
     // setting key callback method
     glfwSetKeyCallback(window, key_callback);
     glfwSetCharCallback(window, character_callback);
+
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
     if (!consoleEnabled) 
     {
-        const float cameraSpeed = 4.0f * deltaTime;
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            cameraPos += cameraSpeed * cameraFront;
+            camera.ProcessKeyboard(FORWARD, deltaTime);
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            cameraPos -= cameraSpeed * cameraFront;
+            camera.ProcessKeyboard(BACKWARD, deltaTime);
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            camera.ProcessKeyboard(LEFT, deltaTime);
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            camera.ProcessKeyboard(RIGHT, deltaTime);
     }
 }
 
@@ -399,33 +522,13 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
         lastX = xpos;
         lastY = ypos;
 
-        const float sensitivity = 0.1f;
-        xoffset *= sensitivity;
-        yoffset *= sensitivity;
-
-        yaw += xoffset;
-        pitch += yoffset;
-
-        if (pitch > 89.0f)
-            pitch = 89.0f;
-        if (pitch < -89.0f)
-            pitch = -89.0f;
-
-        glm::vec3 direction;
-        direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-        direction.y = sin(glm::radians(pitch));
-        direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-        cameraFront = glm::normalize(direction);
+        camera.ProcessMouseMovement(xoffset, yoffset);
     }
 };
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    fov -= (float)yoffset * 4.0f;
-    if (fov < 1.0f)
-        fov = 1.0f;
-    if (fov > 70.0f)
-        fov = 70.0f;
+    camera.ProcessMouseScroll(yoffset);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
