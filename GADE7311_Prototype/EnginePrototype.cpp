@@ -35,6 +35,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void character_callback(GLFWwindow* window, unsigned int codepoint);
+unsigned int loadTexture(const char* path);
 unsigned int loadCubemap(vector<std::string> faces);
 
 string ConsoleCommands();
@@ -58,12 +59,13 @@ bool consoleTyping = false;
 const char Console_key = GLFW_KEY_SPACE;
 string command_line;
 string previousCommands;
-//string path = "level.fbx";
+string path = "WolfensteinMap.obj";
 int startTime = time(NULL);
 int endTime;
 int fps = 0;
 int fpsCount = 0;
 //Model models(path);
+
 
 GLFWwindow* engineView;
 
@@ -108,12 +110,13 @@ int main()
 
     //shaders
     EngineShader newShaders("ShaderVertex.txt", "ShaderFragment.txt");
-    EngineShader skyboxShader("SkyBoxVertexShader.vs", "SkyBoxFragmentShader.fs");
+    //EngineShader skyboxShader("ShaderVertex.txt", "ShaderFragment.txt");
+    EngineShader skyboxShader("SkyBoxVertices.txt", "SkyBoxFragments.txt");
 
     //Models
     //Model models(path);
     //Model models("backpack.obj");
-    Model models("WolfensteinMap.obj");
+    Model models(path);
     //Model models("Survival_BackPack_2.fbx");
     //Model models("level.fbx");
     //Model models("leve.obj");
@@ -190,6 +193,51 @@ int main()
          0.1f,  0.1f, -0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f, // tri 2
          0.4f,  0.1f, -0.5f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f  //
     };
+
+    /*float cubeVertices[] = {
+        // positions          // texture Coords
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    };*/
 
     glm::vec3 cubePositions[] = {
     glm::vec3(1.0f,  0.0f,  0.0f),
@@ -304,6 +352,8 @@ int main()
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(texture2);*/
 
+    
+
     unsigned int skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
     glGenBuffers(1, &skyboxVBO);
@@ -313,14 +363,16 @@ int main()
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-    vector<std::string> faces;
+    //unsigned int cubeTexture = loadTexture(FileSystem::getPath("resources/textures/container.jpg").c_str());
+
+    vector<std::string> faces
     {
         "right.jpg",
         "left.jpg",
         "top.jpg",
         "bottom.jpg",
         "front.jpg",
-        "back.jpg";
+        "back.jpg"
     };
     unsigned int cubemapTexture = loadCubemap(faces);
 
@@ -362,23 +414,8 @@ int main()
         float camZ = cos(glfwGetTime()) * radius;
         cameraValue = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glm::mat4 perspective;
-        perspective = glm::perspective(glm::radians(fov), 900.0f / 900.0f, 0.1f, 100.0f);
-
-        glDepthFunc(GL_LEQUAL);
-        skyboxShader.use();
-        view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
-        skyboxShader.setMat4("view", view);
-        skyboxShader.setMat4("projection", projection);
-
-        glBindVertexArray(skyboxVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthFunc(GL_LESS);
-
-        //model render
-        object = glm::translate(object, glm::vec3(0.0f, 0.0f, 0.0f)); 
+        perspective = glm::perspective(glm::radians(fov), 900.0f / 900.0f, 0.1f, 100.0f); 
+        object = glm::translate(object, glm::vec3(0.0f, 0.0f, 0.0f));
         object = glm::scale(object, glm::vec3(1.0f, 1.0f, 1.0f));
         newShaders.setMat4("object", object);
         models.Draw(newShaders);
@@ -388,6 +425,22 @@ int main()
         unsigned int cmrCoord = glGetUniformLocation(newShaders.ShaderID, "camera");
         glUniformMatrix4fv(cmrCoord, 1, GL_FALSE, &cameraValue[0][0]);
         newShaders.setMat4("perspective", perspective);
+
+        glDepthFunc(GL_LEQUAL);
+        skyboxShader.use();
+        //glm::mat4 view = camera.GetViewMatrix();
+        skyboxShader.setMat4("view", view);
+        skyboxShader.setMat4("persective", perspective);
+
+        glBindVertexArray(skyboxVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthFunc(GL_LESS);
+
+        //model render
+        
 
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
@@ -658,6 +711,7 @@ string ConsoleCommands()
 
         else if (command[0] == "object_load")
         {
+            path = "backpack.obj";
             return "\nExecuted: " + command[0];
         }
 
