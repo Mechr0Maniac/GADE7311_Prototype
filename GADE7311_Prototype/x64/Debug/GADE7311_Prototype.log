@@ -1,3 +1,18 @@
-﻿  SkyboxShaderClass.cpp
-  glad.c
+﻿  EnginePrototype.cpp
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(93,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(99,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Model_Loader.h(99,22): warning C4101: 'numIndices': unreferenced local variable
+  The contents of <filesystem> are available only with C++17 or later.
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(65,15): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(487,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(488,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(547,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(585,23): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(651,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(689,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(690,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(694,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(695,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(696,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(697,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   GADE7311_Prototype.vcxproj -> D:\work\coding\2021\!OpenGL\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe
