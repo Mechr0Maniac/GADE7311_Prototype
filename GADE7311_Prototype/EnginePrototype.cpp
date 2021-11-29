@@ -37,6 +37,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void character_callback(GLFWwindow* window, unsigned int codepoint);
+unsigned int loadTexture(const char* path);
+unsigned int loadCubemap(vector<std::string> faces);
 
 string ConsoleCommands();
 vector<string> split(string x, char delim = ' ');
@@ -59,12 +61,13 @@ bool consoleTyping = false;
 const char Console_key = GLFW_KEY_SPACE;
 string command_line;
 string previousCommands;
-//string path = "level.fbx";
+string path = "WolfensteinMap.obj";
 int startTime = time(NULL);
 int endTime;
 int fps = 0;
 int fpsCount = 0;
 //Model models(path);
+
 
 GLFWwindow* engineView;
 
@@ -108,13 +111,16 @@ int main()
     glfwSetInputMode(engineView, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     //shaders
+    //EngineShader newShaders("ShaderVertex.txt", "ShaderFragment.txt");
+    //EngineShader skyboxShader("ShaderVertex.txt", "ShaderFragment.txt");
+    //EngineShader skyboxShader("SkyBoxVertices.txt", "SkyBoxFragments.txt");
     SkyboxShaderClass newShaders("ShaderVertex.vert", "ShaderFragment.frag");
     SkyboxShaderClass skyboxShader("SkyBoxVertexShader.vert", "SkyBoxFragmentShader.frag");
 
     //Models
     //Model models(path);
     //Model models("backpack.obj");
-    Model models("WolfensteinMap.obj");
+    Model models(path);
     //Model models("Survival_BackPack_2.fbx");
     //Model models("level.fbx");
     //Model models("leve.obj");
@@ -191,6 +197,51 @@ int main()
          0.1f,  0.1f, -0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f, // tri 2
          0.4f,  0.1f, -0.5f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f  //
     };
+
+    /*float cubeVertices[] = {
+        // positions          // texture Coords
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    };*/
 
     glm::vec3 cubePositions[] = {
     glm::vec3(1.0f,  0.0f,  0.0f),
@@ -326,7 +377,7 @@ int main()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWdh, texHgt, 0, GL_RGB, GL_UNSIGNED_BYTE, texture2);
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(texture2);*/
-
+	
     unsigned int skyboxVAO, skyboxVBO, skyboxEBO;
     glGenVertexArrays(1, &skyboxVAO);
     glGenBuffers(1, &skyboxVBO);
@@ -437,11 +488,33 @@ int main()
         float camZ = cos(glfwGetTime()) * radius;
         cameraValue = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glm::mat4 perspective;
-        perspective = glm::perspective(glm::radians(fov), 900.0f / 900.0f, 0.1f, 100.0f);
+        perspective = glm::perspective(glm::radians(fov), 900.0f / 900.0f, 0.1f, 100.0f); 
+        object = glm::translate(object, glm::vec3(0.0f, 0.0f, 0.0f));
+        object = glm::scale(object, glm::vec3(1.0f, 1.0f, 1.0f));
+        newShaders.setMat4("object", object);
+        models.Draw(newShaders);
 
-        
+        unsigned int objCoord = glGetUniformLocation(newShaders.ShaderID, "object");
+        glUniformMatrix4fv(objCoord, 1, GL_FALSE, glm::value_ptr(object));
+        unsigned int cmrCoord = glGetUniformLocation(newShaders.ShaderID, "camera");
+        glUniformMatrix4fv(cmrCoord, 1, GL_FALSE, &cameraValue[0][0]);
+        newShaders.setMat4("perspective", perspective);
+		
+        /*glDepthFunc(GL_LEQUAL);
+        skyboxShader.use();
+        //glm::mat4 view = camera.GetViewMatrix();
+        skyboxShader.setMat4("view", view);
+        skyboxShader.setMat4("persective", perspective);
+
+        glBindVertexArray(skyboxVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthFunc(GL_LESS);*/
 
         //model render
+		
         object = glm::translate(object, glm::vec3(0.0f, 0.0f, 0.0f)); 
         object = glm::scale(object, glm::vec3(1.0f, 1.0f, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(newShaders.ID, "object"), 1, GL_FALSE, glm::value_ptr(object));
@@ -742,6 +815,7 @@ string ConsoleCommands()
 
         else if (command[0] == "object_load")
         {
+            path = "backpack.obj";
             return "\nExecuted: " + command[0];
         }
 
