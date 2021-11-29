@@ -491,14 +491,14 @@ int main()
         perspective = glm::perspective(glm::radians(fov), 900.0f / 900.0f, 0.1f, 100.0f); 
         object = glm::translate(object, glm::vec3(0.0f, 0.0f, 0.0f));
         object = glm::scale(object, glm::vec3(1.0f, 1.0f, 1.0f));
-        newShaders.setMat4("object", object);
+        //newShaders.setMat4("object", object);
         models.Draw(newShaders);
 
-        unsigned int objCoord = glGetUniformLocation(newShaders.ShaderID, "object");
-        glUniformMatrix4fv(objCoord, 1, GL_FALSE, glm::value_ptr(object));
-        unsigned int cmrCoord = glGetUniformLocation(newShaders.ShaderID, "camera");
-        glUniformMatrix4fv(cmrCoord, 1, GL_FALSE, &cameraValue[0][0]);
-        newShaders.setMat4("perspective", perspective);
+        //unsigned int objCoord = glGetUniformLocation(newShaders.ShaderID, "object");
+        //glUniformMatrix4fv(objCoord, 1, GL_FALSE, glm::value_ptr(object));
+        //unsigned int cmrCoord = glGetUniformLocation(newShaders.ShaderID, "camera");
+        //glUniformMatrix4fv(cmrCoord, 1, GL_FALSE, &cameraValue[0][0]);
+        //newShaders.setMat4("perspective", perspective);
 		
         /*glDepthFunc(GL_LEQUAL);
         skyboxShader.use();
