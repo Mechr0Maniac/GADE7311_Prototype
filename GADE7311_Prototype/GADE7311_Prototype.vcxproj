@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="EnginePrototype.h" />
     <ClInclude Include="Engine_Shaders.h" />
     <ClInclude Include="Mesh_Loader.h" />

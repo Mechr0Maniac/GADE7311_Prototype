@@ -24,7 +24,7 @@
 #include <time.h>
 
 #include <iostream>
-#include <Camera.h>
+#include "Camera.h"
 
 using std::string;
 using std::vector;
@@ -113,8 +113,9 @@ int main()
     //Models
     //Model models(path);
     //Model models("backpack.obj");
+    Model models("WolfensteinMap.obj");
     //Model models("Survival_BackPack_2.fbx");
-    Model models("level.fbx");
+    //Model models("level.fbx");
     //Model models("leve.obj");
 
     //vertices
@@ -315,11 +316,11 @@ int main()
     vector<std::string> faces;
     {
         "right.jpg",
-            "left.jpg",
-            "top.jpg",
-            "bottom.jpg",
-            "front.jpg",
-            "back.jpg";
+        "left.jpg",
+        "top.jpg",
+        "bottom.jpg",
+        "front.jpg",
+        "back.jpg";
     };
     unsigned int cubemapTexture = loadCubemap(faces);
 
@@ -353,7 +354,8 @@ int main()
         glm::mat4 object = glm::mat4(1.0f);
         glm::mat4 door = glm::mat4(1.0f);
         glm::mat4 cameraValue(1.0f);
-        glm::mat4 view = camera.GetViewMatrix();
+        ///glm::mat4 view = camera.GetViewMatrix();
+        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
         const float radius = 10.0f;
         float camX = sin(glfwGetTime()) * radius;
@@ -489,17 +491,18 @@ void processInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    float cameraSpeed = 2.5 * deltaTime;
 
     if (!consoleEnabled) 
     {
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            camera.ProcessKeyboard(FORWARD, deltaTime);
+            cameraPos += cameraSpeed * cameraFront;
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            camera.ProcessKeyboard(BACKWARD, deltaTime);
+            cameraPos -= cameraSpeed * cameraFront;
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            camera.ProcessKeyboard(LEFT, deltaTime);
+            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            camera.ProcessKeyboard(RIGHT, deltaTime);
+            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     }
 }
 
@@ -510,7 +513,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    if (firstMouse)
+    /*if (firstMouse)
     {
         lastX = xpos;
         lastY = ypos;
@@ -523,12 +526,47 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
         lastY = ypos;
 
         camera.ProcessMouseMovement(xoffset, yoffset);
+    }*/
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
     }
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+    lastX = xpos;
+    lastY = ypos;
+
+    float sensitivity = 0.1f; // change this value to your liking
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    yaw += xoffset;
+    pitch += yoffset;
+
+    // make sure that when pitch is out of bounds, screen doesn't get flipped
+    if (pitch > 89.0f)
+        pitch = 89.0f;
+    if (pitch < -89.0f)
+        pitch = -89.0f;
+
+    glm::vec3 front;
+    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front.y = sin(glm::radians(pitch));
+    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    cameraFront = glm::normalize(front);
 };
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    camera.ProcessMouseScroll(yoffset);
+    //camera.ProcessMouseScroll(yoffset);
+    fov -= (float)yoffset;
+    if (fov < 1.0f)
+        fov = 1.0f;
+    if (fov > 45.0f)
+        fov = 45.0f;
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
