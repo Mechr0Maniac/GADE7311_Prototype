@@ -1,18 +1,37 @@
 ﻿  EnginePrototype.cpp
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(93,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(99,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Model_Loader.h(99,22): warning C4101: 'numIndices': unreferenced local variable
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(93,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(99,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\Model_Loader.h(99,22): warning C4101: 'numIndices': unreferenced local variable
   The contents of <filesystem> are available only with C++17 or later.
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(65,15): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(487,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(488,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(547,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(585,23): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(651,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(689,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(690,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(694,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(695,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(696,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(697,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  GADE7311_Prototype.vcxproj -> D:\work\coding\2021\!OpenGL\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(65,15): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(487,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(488,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(547,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(585,23): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(651,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(689,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(690,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(694,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(695,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(696,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(697,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  imageLock.cpp
+  SkyboxShaderClass.cpp
+  Generating Code...
+  glad.c
+glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(context.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(init.obj) : warning LNK4099: PDB '' was not found with 'glfw3.lib(init.obj)' or at ''; linking object as if no debug info
+glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(input.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(window.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(win32_thread.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_thread.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+glfw3.lib(osmesa_context.obj) : warning LNK4099: PDB 'glfw3.pdb' was not found with 'glfw3.lib(osmesa_context.obj)' or at 'D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\glfw3.pdb'; linking object as if no debug info
+  GADE7311_Prototype.vcxproj -> D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe
