@@ -12,8 +12,8 @@ newmtl Material__7
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka D:\library\pictures\Assignments\gade\FloorMat.png
-	map_Kd D:\library\pictures\Assignments\gade\FloorMat.png
+	map_Ka FloorMat.png
+	map_Kd FloorMat.png
 
 newmtl Material__2
 	Ns 10.0000
@@ -26,8 +26,8 @@ newmtl Material__2
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka D:\library\pictures\Assignments\gade\StoneBrickBlue.png
-	map_Kd D:\library\pictures\Assignments\gade\StoneBrickBlue.png
+	map_Ka StoneBrickBlue.png
+	map_Kd StoneBrickBlue.png
 
 newmtl Material__5
 	Ns 10.0000
@@ -40,8 +40,8 @@ newmtl Material__5
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka D:\library\pictures\Assignments\gade\DoorHolder.png
-	map_Kd D:\library\pictures\Assignments\gade\DoorHolder.png
+	map_Ka DoorHolder.png
+	map_Kd DoorHolder.png
 
 newmtl Material__6
 	Ns 10.0000
@@ -54,8 +54,8 @@ newmtl Material__6
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka D:\library\pictures\Assignments\gade\MetalDoor.png
-	map_Kd D:\library\pictures\Assignments\gade\MetalDoor.png
+	map_Ka MetalDoor.png
+	map_Kd MetalDoor.png
 
 newmtl Material__3
 	Ns 10.0000
@@ -68,8 +68,8 @@ newmtl Material__3
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka D:\library\pictures\Assignments\gade\StoneBrick.png
-	map_Kd D:\library\pictures\Assignments\gade\StoneBrick.png
+	map_Ka StoneBrick.png
+	map_Kd StoneBrick.png
 
 newmtl Material__4
 	Ns 10.0000
@@ -82,5 +82,5 @@ newmtl Material__4
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka D:\library\pictures\Assignments\gade\WoodWall.png
-	map_Kd D:\library\pictures\Assignments\gade\WoodWall.png
+	map_Ka WoodWall.png
+	map_Kd WoodWall.png
