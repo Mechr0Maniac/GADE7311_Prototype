@@ -80,7 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Vega\Semester 2\GADE\compiler files\include;D:\work\coding\2021\!OpenGL\GADE7311_Prototype\compiler files\include;D:\library\desktop\compiler files\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\work\coding\2021\!OpenGL\GADE7311_Prototype\compiler files\include;D:\Vega\Semester 2\GADE\compiler files\include;D:\library\desktop\compiler files\include;D:\Vega\Semester 2\GADE\GADE7311_Prototype\compiler files\include\GL;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Vega\Semester 2\GADE\GADE7311_Prototype\compiler files\additional libs;D:\work\coding\2021\!OpenGL\GADE7311_Prototype\compiler files\libs;D:\Vega\Semester 2\GADE\compiler files\libs;D:\library\desktop\compiler files\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,12 +151,14 @@
     <ClInclude Include="Engine_Shaders.h" />
     <ClInclude Include="Mesh_Loader.h" />
     <ClInclude Include="Model_Loader.h" />
+    <ClInclude Include="SkyboxShader.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePrototype.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="imageLock.cpp" />
+    <ClCompile Include="SkyboxShaderClass.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
