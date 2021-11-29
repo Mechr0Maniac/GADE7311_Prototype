@@ -14,6 +14,7 @@
 
 #include "Mesh_Loader.h"
 #include "Engine_Shaders.h"
+#include "SkyboxShader.h"
 
 #include <string>
 #include <fstream>
@@ -43,7 +44,7 @@ public:
     }
 
     // draws the model, and thus all its meshes
-    void Draw(EngineShader& shader)
+    void Draw(SkyboxShaderClass& shader)
     {
         for (unsigned int i = 0; i < meshes.size(); i++)
             meshes[i].Draw(shader);

@@ -1,17 +1,18 @@
 ﻿  EnginePrototype.cpp
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(91,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(97,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\Model_Loader.h(98,22): warning C4101: 'numIndices': unreferenced local variable
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(62,15): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(361,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(362,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(392,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(428,23): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(494,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(532,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(533,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(537,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(538,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(539,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\work\coding\2021\!OpenGL\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(540,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  GADE7311_Prototype.vcxproj -> D:\work\coding\2021\!OpenGL\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(93,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\Mesh_Loader.h(99,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\Model_Loader.h(99,22): warning C4101: 'numIndices': unreferenced local variable
+  The contents of <filesystem> are available only with C++17 or later.
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(63,15): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(436,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(437,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(474,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(512,23): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(578,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(616,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(617,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(621,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(622,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(623,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Vega\Semester 2\GADE\GADE7311_Prototype\GADE7311_Prototype\EnginePrototype.cpp(624,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  GADE7311_Prototype.vcxproj -> D:\Vega\Semester 2\GADE\GADE7311_Prototype\x64\Debug\GADE7311_Prototype.exe
